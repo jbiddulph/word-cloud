@@ -2,13 +2,32 @@
   <div>
     <h2>My Topics Challenge</h2>
     <ul class="word-list">
-      <li
-        v-for="word in newWords[0]"
-        :key="word.id"
-        :class="popularity(word.volume)"
-        :style="'font-size:' + word.volume + 'px'"
-      >
-        {{ word.label }},
+      <li v-for="word in newWords[0]" :key="word.id" :class="popularity1">
+        <template v-if="word.volume > 80">
+          <span class="popularity-xl"
+            >{{ word.label }} ({{ word.volume }}),</span
+          >
+        </template>
+        <template v-else-if="word.volume >= 40">
+          <span class="popularity-l"
+            >{{ word.label }}, ({{ word.volume }}),</span
+          >
+        </template>
+        <template v-else-if="word.volume >= 20">
+          <span class="popularity-m"
+            >{{ word.label }}, ({{ word.volume }}),</span
+          >
+        </template>
+        <template v-else-if="word.volume >= 10">
+          <span class="popularity-s"
+            >{{ word.label }}, ({{ word.volume }}),</span
+          >
+        </template>
+        <template v-else-if="word.volume < 9">
+          <span class="popularity-xs"
+            >{{ word.label }}, ({{ word.volume }}),</span
+          >
+        </template>
       </li>
     </ul>
   </div>
@@ -72,5 +91,25 @@ h2 {
   justify-content: center;
   padding-left: 5px;
   padding-right: 5px;
+}
+/* extra small text */
+.popularity-xs {
+  font-size: 12px;
+}
+/* small text */
+.popularity-s {
+  font-size: 20px;
+}
+/* medium text */
+.popularity-m {
+  font-size: 36px;
+}
+/* large text */
+.popularity-l {
+  font-size: 50px;
+}
+/* extra large text */
+.popularity-xl {
+  font-size: 70px;
 }
 </style>
