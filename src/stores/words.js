@@ -7,7 +7,8 @@ export default defineStore("words", {
   }),
   actions: {
     async saveNewWords(words) {
-      this.words = words;
+      console.log(words);
+      this.words.push(words);
     },
   },
 });

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <button @click.prevent="getWords">Load Word Cloud</button>
+    <button @click.prevent="saveNewWords(words)">Save Words</button>
     <div v-for="word in words" :key="word.id">{{ word.label }}</div>
 
-    <div v-if="newWords">{{ newWords }}</div>
+    <div>{{ newWords }}</div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { mapState, mapActions } from "pinia";
-import useWordsStore from "@/stores/player";
+import useWordsStore from "@/stores/words";
 
 export default {
   name: "WordCloud",
@@ -19,16 +19,16 @@ export default {
       words: [],
     };
   },
-  computed: {
-    ...mapState(useWordsStore, ["newWords"]),
-    saveNewWords(){
-      if (this.words != null) {
-        saveWords(words);
-      }
+  mounted() {
+    this.getWords();
+  },
+  created() {
+    if (this.words.length > 0) {
+      saveNewWords(words);
     }
   },
-  mounted: {
-    saveNewWords()
+  computed: {
+    ...mapState(useWordsStore, ["newWords"]),
   },
   methods: {
     ...mapActions(useWordsStore, ["saveNewWords"]),
@@ -43,6 +43,7 @@ export default {
         .catch((error) => {
           console.log("Error: ", error);
         });
+      // saveNewWords(this.words);
     },
   },
 };
