@@ -1,0 +1,19 @@
+{
+  "name": "word-cloud",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "pinia": "^2.0.17",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.1",
+    "vite": "^3.0.4",
+    "vue-cli-plugin-axios": "~0.0.4"
+  }
+}
