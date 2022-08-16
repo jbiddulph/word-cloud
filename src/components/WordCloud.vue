@@ -3,29 +3,34 @@
     <h2>My Topics Challenge</h2>
     <ul class="word-list">
       <li v-for="word in newWords[0]" :key="word.id" :class="popularity1">
-        <template v-if="word.volume > 80">
-          <span class="popularity-xl"
-            >{{ word.label }} ({{ word.volume }}),</span
+        <template v-if="word.sentimentScore > 90">
+          <span class="popularity-xl text-green"
+            >{{ word.label }} ({{ word.sentimentScore }}),</span
           >
         </template>
-        <template v-else-if="word.volume >= 40">
-          <span class="popularity-l"
-            >{{ word.label }}, ({{ word.volume }}),</span
+        <template v-else-if="word.sentimentScore >= 80">
+          <span class="popularity-l text-green"
+            >{{ word.label }} ({{ word.sentimentScore }}),</span
           >
         </template>
-        <template v-else-if="word.volume >= 20">
-          <span class="popularity-m"
-            >{{ word.label }}, ({{ word.volume }}),</span
+        <template v-else-if="word.sentimentScore >= 70">
+          <span class="popularity-m text-green"
+            >{{ word.label }} ({{ word.sentimentScore }}),</span
           >
         </template>
-        <template v-else-if="word.volume >= 10">
-          <span class="popularity-s"
-            >{{ word.label }}, ({{ word.volume }}),</span
+        <template v-else-if="word.sentimentScore >= 60">
+          <span class="popularity-s text-green"
+            >{{ word.label }} ({{ word.sentimentScore }}),</span
           >
         </template>
-        <template v-else-if="word.volume < 9">
+        <template v-else-if="word.sentimentScore >= 55">
           <span class="popularity-xs"
-            >{{ word.label }}, ({{ word.volume }}),</span
+            >{{ word.label }} ({{ word.sentimentScore }}),</span
+          >
+        </template>
+        <template v-else-if="word.sentimentScore < 40">
+          <span class="popularity-xxs text-red"
+            >{{ word.label }} ({{ word.sentimentScore }}),</span
           >
         </template>
       </li>
@@ -79,6 +84,7 @@ export default {
 <style scoped>
 h2 {
   margin-bottom: 30px;
+  text-decoration: underline;
 }
 .word-list {
   padding-left: 0;
@@ -92,9 +98,19 @@ h2 {
   padding-left: 5px;
   padding-right: 5px;
 }
+.text-red {
+  color: #990000;
+}
+.text-green {
+  color: #00901a;
+}
+/* extra extra small text */
+.popularity-xxs {
+  font-size: 12px;
+}
 /* extra small text */
 .popularity-xs {
-  font-size: 12px;
+  font-size: 15px;
 }
 /* small text */
 .popularity-s {
@@ -102,14 +118,14 @@ h2 {
 }
 /* medium text */
 .popularity-m {
-  font-size: 36px;
+  font-size: 30px;
 }
 /* large text */
 .popularity-l {
-  font-size: 50px;
+  font-size: 40px;
 }
 /* extra large text */
 .popularity-xl {
-  font-size: 70px;
+  font-size: 50px;
 }
 </style>
