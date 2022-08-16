@@ -1,9 +1,7 @@
 <template>
   <div>
-    <button @click.prevent="saveNewWords(words)">Save Words</button>
-    <div v-for="word in words" :key="word.id">{{ word.label }}</div>
-
-    <div>{{ newWords }}</div>
+    <h2>My Topics Challenge</h2>
+    <div v-for="word in newWords[0]" :key="word.id">{{ word.label }}</div>
   </div>
 </template>
 
@@ -22,18 +20,14 @@ export default {
   mounted() {
     this.getWords();
   },
-  created() {
-    if (this.words.length > 0) {
-      saveNewWords(words);
-    }
-  },
+  created() {},
   computed: {
     ...mapState(useWordsStore, ["newWords"]),
   },
   methods: {
     ...mapActions(useWordsStore, ["saveNewWords"]),
-    getWords() {
-      axios
+    async getWords() {
+      await axios
         .get(
           "https://gist.githubusercontent.com/raymondmuller/1092b8c9eec53d931a86961f7e635465/raw/ff2f9afdea00efd8d95a8d10654455dd68bd3f43/topics.json"
         )
@@ -43,7 +37,10 @@ export default {
         .catch((error) => {
           console.log("Error: ", error);
         });
-      // saveNewWords(this.words);
+
+      if (this.words.length > 0) {
+        this.saveNewWords(this.words);
+      }
     },
   },
 };

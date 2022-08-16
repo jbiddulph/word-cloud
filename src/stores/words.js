@@ -11,4 +11,12 @@ export default defineStore("words", {
       this.words.push(words);
     },
   },
+  getters: {
+    newWords: (state) => {
+      if (state.words) {
+        return state.words;
+      }
+      return false;
+    },
+  },
 });
