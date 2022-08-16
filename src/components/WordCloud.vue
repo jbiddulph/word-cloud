@@ -1,7 +1,16 @@
 <template>
   <div>
     <h2>My Topics Challenge</h2>
-    <div v-for="word in newWords[0]" :key="word.id">{{ word.label }}</div>
+    <ul class="word-list">
+      <li
+        v-for="word in newWords[0]"
+        :key="word.id"
+        :class="popularity(word.volume)"
+        :style="'font-size:' + word.volume + 'px'"
+      >
+        {{ word.label }},
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -20,9 +29,11 @@ export default {
   mounted() {
     this.getWords();
   },
-  created() {},
   computed: {
     ...mapState(useWordsStore, ["newWords"]),
+    popularity() {
+      return (amount) => `${amount}`;
+    },
   },
   methods: {
     ...mapActions(useWordsStore, ["saveNewWords"]),
@@ -45,3 +56,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h2 {
+  margin-bottom: 30px;
+}
+.word-list {
+  padding-left: 0;
+  text-align: center;
+}
+.word-list li {
+  list-style-type: none;
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+</style>
