@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row">
     <div class="left">
-      <h2>My Topics Challenge</h2>
+      <h1>My Topics Challenge</h1>
       <ul class="word-list">
         <!-- Looping words array and conditionalise result -->
         <li v-for="word in newWords[0]" :key="word.id">
@@ -124,7 +124,8 @@ export default {
   width: 100%;
   margin-bottom: 20px;
 }
-h2 {
+h1 {
+  font-size: 60px;
   margin-bottom: 30px;
   text-decoration: underline;
 }
