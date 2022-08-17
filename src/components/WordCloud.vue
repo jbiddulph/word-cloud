@@ -1,40 +1,60 @@
 <template>
-  <div>
-    <h2>My Topics Challenge</h2>
-    <ul class="word-list">
-      <li v-for="word in newWords[0]" :key="word.id" :class="popularity1">
-        <template v-if="word.sentimentScore > 90">
-          <span class="popularity-xl text-green"
-            >{{ word.label }} ({{ word.sentimentScore }}),</span
-          >
-        </template>
-        <template v-else-if="word.sentimentScore >= 80">
-          <span class="popularity-l text-green"
-            >{{ word.label }} ({{ word.sentimentScore }}),</span
-          >
-        </template>
-        <template v-else-if="word.sentimentScore >= 70">
-          <span class="popularity-m text-green"
-            >{{ word.label }} ({{ word.sentimentScore }}),</span
-          >
-        </template>
-        <template v-else-if="word.sentimentScore >= 60">
-          <span class="popularity-s text-green"
-            >{{ word.label }} ({{ word.sentimentScore }}),</span
-          >
-        </template>
-        <template v-else-if="word.sentimentScore >= 55">
-          <span class="popularity-xs"
-            >{{ word.label }} ({{ word.sentimentScore }}),</span
-          >
-        </template>
-        <template v-else-if="word.sentimentScore < 40">
-          <span class="popularity-xxs text-red"
-            >{{ word.label }} ({{ word.sentimentScore }}),</span
-          >
-        </template>
-      </li>
-    </ul>
+  <div class="flex flex-row">
+    <div class="left">
+      <h2>My Topics Challenge</h2>
+      <ul class="word-list">
+        <li v-for="word in newWords[0]" :key="word.id">
+          <template v-if="word.sentimentScore > 90">
+            <span class="popularity-xl text-green" @click.prevent="show(word)"
+              >{{ word.label }} ({{ word.sentimentScore }}),</span
+            >
+          </template>
+          <template v-else-if="word.sentimentScore >= 80">
+            <span class="popularity-l text-green" @click.prevent="show(word)"
+              >{{ word.label }} ({{ word.sentimentScore }}),</span
+            >
+          </template>
+          <template v-else-if="word.sentimentScore >= 70">
+            <span class="popularity-m text-green" @click.prevent="show(word)"
+              >{{ word.label }} ({{ word.sentimentScore }}),</span
+            >
+          </template>
+          <template v-else-if="word.sentimentScore >= 60">
+            <span class="popularity-s text-green" @click.prevent="show(word)"
+              >{{ word.label }} ({{ word.sentimentScore }}),</span
+            >
+          </template>
+          <template v-else-if="word.sentimentScore >= 55">
+            <span class="popularity-xs" @click.prevent="show(word)"
+              >{{ word.label }} ({{ word.sentimentScore }}),</span
+            >
+          </template>
+          <template v-else-if="word.sentimentScore < 40">
+            <span class="popularity-xxs text-red" @click.prevent="show(word)"
+              >{{ word.label }} ({{ word.sentimentScore }}),</span
+            >
+          </template>
+        </li>
+      </ul>
+    </div>
+    <div class="right align-center justify-center">
+      <div v-if="this.rightPanel">
+        <!-- {{ selectedWord }} -->
+        <p>Information on topic: {{ selectedWord.label }}</p>
+        <p>Total mentions: {{ selectedWord.volume }}</p>
+        <div>
+          <span v-if="selectedWord.sentiment.positive" class="text-green">
+            Positive mentions: {{ selectedWord.sentiment.positive }}<br />
+          </span>
+          <span v-if="selectedWord.sentiment.negative" class="text-red">
+            Negative mentions: {{ selectedWord.sentiment.negative }}<br
+          /></span>
+          <span v-if="selectedWord.sentiment.neutral">
+            Neutral mentions: {{ selectedWord.sentiment.neutral }}<br
+          /></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -48,6 +68,8 @@ export default {
   data() {
     return {
       words: [],
+      rightPanel: false,
+      selectedWord: {},
     };
   },
   mounted() {
@@ -55,9 +77,6 @@ export default {
   },
   computed: {
     ...mapState(useWordsStore, ["newWords"]),
-    popularity() {
-      return (amount) => `${amount}`;
-    },
   },
   methods: {
     ...mapActions(useWordsStore, ["saveNewWords"]),
@@ -77,11 +96,24 @@ export default {
         this.saveNewWords(this.words);
       }
     },
+    show(val) {
+      this.rightPanel = true;
+      this.selectedWord = val;
+      console.log("vAl: ", this.selectedWord);
+    },
   },
 };
 </script>
 
 <style scoped>
+.right {
+  font-size: 24px;
+  display: inline-flex;
+}
+.right p {
+  width: 100%;
+  margin-bottom: 20px;
+}
 h2 {
   margin-bottom: 30px;
   text-decoration: underline;
@@ -97,6 +129,29 @@ h2 {
   justify-content: center;
   padding-left: 5px;
   padding-right: 5px;
+}
+.word-list li {
+  cursor: pointer;
+}
+.left {
+  width: 100%;
+}
+.right {
+  width: 100%;
+}
+.flex {
+  display: flex;
+}
+.flex-row {
+  flex-direction: row;
+}
+.align-center {
+  display: flex;
+  align-items: center;
+}
+.justify-center {
+  display: flex;
+  justify-content: center;
 }
 .text-red {
   color: #990000;
