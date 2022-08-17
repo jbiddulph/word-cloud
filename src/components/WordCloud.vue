@@ -3,34 +3,45 @@
     <div class="left">
       <h2>My Topics Challenge</h2>
       <ul class="word-list">
+        <!-- Looping words array and conditionalise result -->
         <li v-for="word in newWords[0]" :key="word.id">
           <template v-if="word.sentimentScore > 90">
-            <span class="popularity-xl text-green" @click.prevent="show(word)"
+            <span
+              class="popularity-xl text-green"
+              @click.prevent="showInfo(word)"
               >{{ word.label }} ({{ word.sentimentScore }}),</span
             >
           </template>
           <template v-else-if="word.sentimentScore >= 80">
-            <span class="popularity-l text-green" @click.prevent="show(word)"
+            <span
+              class="popularity-l text-green"
+              @click.prevent="showInfo(word)"
               >{{ word.label }} ({{ word.sentimentScore }}),</span
             >
           </template>
           <template v-else-if="word.sentimentScore >= 70">
-            <span class="popularity-m text-green" @click.prevent="show(word)"
+            <span
+              class="popularity-m text-green"
+              @click.prevent="showInfo(word)"
               >{{ word.label }} ({{ word.sentimentScore }}),</span
             >
           </template>
           <template v-else-if="word.sentimentScore >= 60">
-            <span class="popularity-s text-green" @click.prevent="show(word)"
+            <span
+              class="popularity-s text-green"
+              @click.prevent="showInfo(word)"
               >{{ word.label }} ({{ word.sentimentScore }}),</span
             >
           </template>
           <template v-else-if="word.sentimentScore >= 55">
-            <span class="popularity-xs" @click.prevent="show(word)"
+            <span class="popularity-xs" @click.prevent="showInfo(word)"
               >{{ word.label }} ({{ word.sentimentScore }}),</span
             >
           </template>
           <template v-else-if="word.sentimentScore < 40">
-            <span class="popularity-xxs text-red" @click.prevent="show(word)"
+            <span
+              class="popularity-xxs text-red"
+              @click.prevent="showInfo(word)"
               >{{ word.label }} ({{ word.sentimentScore }}),</span
             >
           </template>
@@ -39,7 +50,7 @@
     </div>
     <div class="right align-center justify-center">
       <div v-if="this.rightPanel">
-        <!-- {{ selectedWord }} -->
+        <!-- If the word has been clicked, show info here -->
         <p>Information on topic: {{ selectedWord.label }}</p>
         <p>Total mentions: {{ selectedWord.volume }}</p>
         <div>
@@ -91,15 +102,14 @@ export default {
         .catch((error) => {
           console.log("Error: ", error);
         });
-
+      // If there are words save to state
       if (this.words.length > 0) {
         this.saveNewWords(this.words);
       }
     },
-    show(val) {
+    showInfo(val) {
       this.rightPanel = true;
       this.selectedWord = val;
-      console.log("vAl: ", this.selectedWord);
     },
   },
 };
